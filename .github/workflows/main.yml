@@ -15,5 +15,12 @@ jobs:
        java-version: '17'
        distribution: 'temurin'
        cache: maven
-    - name: build the java code
-      run: mvn clean install package
+  dockerbuild:
+   runs-on: ubuntu-latest
+   steps:
+     - name: build the java code
+       run: mvn clean install package
+     - name: Build Docker image
+       run: docker build -t hello-world-image . # Build the Docker image from the Dockerfile in the current directory, tagging it as 'hello-world-image'
+     - name: Run Docker container
+       run: docker run hello-world-image # Run a container from the built image
